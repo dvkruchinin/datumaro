@@ -1,0 +1,33 @@
+name: Coverage
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'develop-tmp'
+jobs:
+  coverage_tests_on_python:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Installing dependencies
+        run: |
+          pip install coverage tensorflow
+          pip install -e ./
+      - name: Code instrumentation
+        run: |
+          coverage run -m unittest discover -v
+          coverage run -a datum.py -h
+          coverage xml
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
