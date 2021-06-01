@@ -27,7 +27,6 @@ jobs:
           coverage run -a datum.py -h
           coverage xml
       - name: Sending coverage results
+        if: matrix.python-version == '3.6'
         run: |
-          if [[ ${{ matrix.python-version }} == '3.6' ]]; then
-            bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml -t ${{ secrets.CODACY_PROJECT_TOKEN }}
-          fi
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml -t ${{ secrets.CODACY_PROJECT_TOKEN }}
