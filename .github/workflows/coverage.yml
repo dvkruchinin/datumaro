@@ -28,4 +28,6 @@ jobs:
           coverage xml
       - name: Sending coverage results
         run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml -t ${{ secrets.CODACY_PROJECT_TOKEN }}
+          if [[ ${{ matrix.python-version }} == '3.6' ]]; then
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml -t ${{ secrets.CODACY_PROJECT_TOKEN }}
+          fi
