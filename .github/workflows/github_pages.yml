@@ -30,15 +30,16 @@ jobs:
         run: |
           npm ci
 
+      - name: Build docs for api
+        run: |
+          pip install -U Sphinx
+          pip install sphinx-rtd-theme==1.0.0
+          sphinx-build -a -n site/source site/static/api
+
       - name: Build docs
         run: |
           pip install gitpython packaging toml
           python site/build_docs.py
-
-      - name: Build api
-        run: |
-          pip install -U Sphinx
-          sphinx-build -a -n site/source site/static/api
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
