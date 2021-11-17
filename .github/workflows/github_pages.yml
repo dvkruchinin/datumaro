@@ -38,6 +38,7 @@ jobs:
       - name: Build api
         run: |
           pip install -U Sphinx
+          pip install sphinx-rtd-theme==1.0.0
           sphinx-build -a -n site/source site/static/api
 
       - name: Deploy
