@@ -32,13 +32,9 @@ jobs:
 
       - name: Build docs
         run: |
-          pip install gitpython packaging toml
-          python site/build_docs.py
-
-      - name: Build api
-        run: |
-          pip install -U Sphinx
+          pip install gitpython packaging toml Sphinx sphinx-rtd-theme==1.0.0
           sphinx-build -a -n site/source site/static/api
+          python site/build_docs.py
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
