@@ -3,7 +3,7 @@ name: Github pages
 on:
   push:
     branches:
-      - develop
+      - develop-tmp
 
 jobs:
   deploy:
@@ -34,6 +34,11 @@ jobs:
         run: |
           pip install gitpython packaging toml
           python site/build_docs.py
+
+      - name: Build api
+        run: |
+          pip install -U Sphinx
+          sphinx-build -a -n site/source site/static/api
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
